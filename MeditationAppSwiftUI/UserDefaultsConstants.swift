@@ -13,4 +13,10 @@ struct UserDefaultsConstants{
     static let userName = "userName"
     static let guideName = "guideName"
     static let experienceLevel = "experienceLevel"
+    
+    //Meditation questions
+    static let questionOneAnswer = "questionOneAnswer"
+    static let questionTwoAnswer = "questionTwoAnswer"
+    static let questionThreeAnswer = "questionThreeAnswer"
+    
 }

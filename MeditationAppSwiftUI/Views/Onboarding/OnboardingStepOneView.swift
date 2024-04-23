@@ -10,8 +10,6 @@ import SwiftUI
 struct OnboardingStepOneView: View {
     @State private var selectedPage = 0
     
-//    The onNext: () -> Void is neither a @State nor a @Binding because it's a closure that is meant to be passed down from a parent view to the child view. It's a function that the child will call when a certain event happens (like tapping the "Next" button), signaling the parent view to take some action. This pattern is commonly used in SwiftUI for communication from child views back to parent views.
-    
     var onNext: () -> Void
     
     var body: some View {

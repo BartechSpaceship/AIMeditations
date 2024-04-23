@@ -14,8 +14,12 @@ struct OnboardingStepTwoView: View {
     @State private var transitioningForward = true
     @AppStorage(UserDefaultsConstants.userName) private var name: String = ""
     @State private var text = ""
+    
     let guides = [BasicListWithName(name: "Jesus"), BasicListWithName(name: "Allah"), BasicListWithName(name: "Buddha"), BasicListWithName(name: "Ron"), BasicListWithName(name: "Jordan Peterson")]
     let experience = [BasicListWithName(name: "None"), BasicListWithName(name: "Beginner"), BasicListWithName(name: "Intermediate"), BasicListWithName(name: "Advanced"), BasicListWithName(name: "I am one with meditation")]
+    
+    //    var onFinish: () -> Void
+    var onNext: () -> Void
     
     
     var body: some View {
@@ -43,7 +47,11 @@ struct OnboardingStepTwoView: View {
                 // Next button
                 Button(action: {
                     withAnimation(.easeInOut(duration: 0.5)) {
-                        currentPage += 1
+                        if currentPage == 2 {
+                            onNext()
+                        } else {
+                            currentPage += 1
+                        }
                     }
                 }) {
                     Text("SKIP")
@@ -137,7 +145,7 @@ struct OnboardingStepTwoView: View {
             
             
             List(guides) { guide in
-                CardView(guide: guide) { selectedGuideName in
+                CardView(listItem: guide) { selectedGuideName in
                     UserDefaults.standard.set(selectedGuideName, forKey: UserDefaultsConstants.guideName)
                     print("Guide Name \(UserDefaults.standard.string(forKey: UserDefaultsConstants.guideName) ?? "")")
                     currentPage += 1
@@ -149,7 +157,7 @@ struct OnboardingStepTwoView: View {
             
             
             
-    
+            
         }
         .padding(.horizontal, 16)
         .frame(maxWidth: .infinity, maxHeight: .infinity)
@@ -170,10 +178,10 @@ struct OnboardingStepTwoView: View {
             
             
             List(experience) { guide in
-                CardView(guide: guide) { selectedGuideName in
+                CardView(listItem: guide) { selectedGuideName in
                     UserDefaults.standard.set(selectedGuideName, forKey: UserDefaultsConstants.experienceLevel)
                     print("Guide Name \(UserDefaults.standard.string(forKey: UserDefaultsConstants.experienceLevel) ?? "")")
-                    currentPage += 1
+                    onNext()
                 }
                 .listRowInsets(EdgeInsets(top: 1, leading: 16, bottom: 16, trailing: 16))
                 .listRowSeparator(.hidden)
@@ -193,5 +201,7 @@ struct OnboardingStepTwoView: View {
 
 
 #Preview {
-    OnboardingStepTwoView()
+    OnboardingStepTwoView {
+        print("next")
+    }
 }

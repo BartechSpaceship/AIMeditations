@@ -13,45 +13,39 @@ import SwiftUI
 
 @main
 struct MeditationAppSwiftUIApp: App {
-//    @State is a property wrapper in SwiftUI that you use to declare a source of truth for simple data that your view reads or writes.
     @State private var isActive = false
-    //here we are setting the default value to false, this does not set a new value 
     @AppStorage(UserDefaultsConstants.isOnboardingComplete) private var isOnboardingComplete = false
-
+    
+    init() {
+        isOnboardingComplete = true
+    }
     
     var body: some Scene {
-          WindowGroup {
-              Group {
-//                  The zIndex is set to ensure the layers stack correctly. Higher zIndex values will place views above those with lower values
-                  if !isActive {
-                      LaunchView()
-                          .zIndex(2)
-                  }
-                  
-                  if isActive && !isOnboardingComplete {
-                      OnboardingView()
-                          .zIndex(1)
-                          .transition(.opacity)
-                  }
-                  
-                  if isOnboardingComplete {
-                      ContentView()
-                          .zIndex(0)
-                          .transition(.opacity)
-                  }
-              }
-              .onAppear(perform: startLaunchSequence)
-//              The .animation modifier is applied to the Group that contains all your conditional views. This will ensure that changes to isActive and isOnboardingComplete are animated.
-              .animation(.easeInOut(duration: 1.0), value: isActive)
-              .animation(.easeInOut(duration: 1.0), value: isOnboardingComplete)
-          }
-      }
-
-      private func startLaunchSequence() {
-          DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
-              withAnimation {
-                  self.isActive = true
-              }
-          }
-      }
+        WindowGroup {
+            ZStack {
+                if isActive {
+                    if isOnboardingComplete {
+                        ContentView()
+                            .transition(.opacity)
+                    } else {
+                        OnboardingView(isOnboardingComplete: $isOnboardingComplete)
+                            .transition(.opacity)
+                    }
+                } else {
+                    LaunchView()
+                }
+            }
+            .animation(.easeInOut(duration: 1.0), value: isActive)
+            .animation(.easeInOut(duration: 0.5), value: isOnboardingComplete)
+            .onAppear(perform: startLaunchSequence)
+        }
+    }
+    
+    private func startLaunchSequence() {
+        DispatchQueue.main.asyncAfter(deadline: .now() + 2) {
+            withAnimation {
+                self.isActive = true
+            }
+        }
+    }
 }
