@@ -18,5 +18,8 @@ struct UserDefaultsConstants{
     static let questionOneAnswer = "questionOneAnswer"
     static let questionTwoAnswer = "questionTwoAnswer"
     static let questionThreeAnswer = "questionThreeAnswer"
+    static let questionOneQuestion = "questionOneQuestion"
+    static let questionTwoQuestion = "questionTwoQuestion"
+    static let questionThreeQuestion = "questionThreeQuestion"
     
 }

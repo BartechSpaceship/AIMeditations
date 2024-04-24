@@ -10,7 +10,11 @@ import SwiftUI
 struct MeditationQuestionOne: View {
     
     var onDismiss: (Bool) -> Void
-    @State private var showingNextModal = false
+ 
+    @State private var selectedView = "questionOne"
+    @State private var customAnswerText = ""
+    @State private var questionTitle = "What is your primary goal for meditating today?"
+    @State private var questionNumber = 1
     
     let listOfGoals = [
         BasicListWithName(name: "Reduce stress or anxiety"),
@@ -23,47 +27,89 @@ struct MeditationQuestionOne: View {
         BasicListWithName(name: "Other")
     ]
     
+    
     var body: some View {
         ZStack {
-            VStack {
-                Text("What is your primary goal for meditating today?")
-                    .font(.system(size: 24))
-                    .fontWeight(.semibold)
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                    .padding(.top, 24)
-                    .padding(.horizontal, 16)
-                
-                List(listOfGoals) { listItem in
-                    CardView(listItem: listItem) { selectedListItem in
-                        print(listItem.name)
-                        UserDefaults.standard.setValue(UserDefaultsConstants.experienceLevel, forKey: listItem.name)
-                        handleItemSelected()
+            if selectedView == "questionOne" {
+                VStack {
+                    Text(questionTitle)
+                        .font(.system(size: 24))
+                        .fontWeight(.semibold)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .padding(.top, 24)
+                        .padding(.horizontal, 16)
+                    
+                    List {
+                        ForEach(listOfGoals) { listItem in
+                            CardView(listItem: listItem) { selectedListItem in
+                                print(listItem.name)
+                                UserDefaults.standard.setValue(questionTitle, forKey: UserDefaultsConstants.questionOneQuestion)
+                                if listItem.name != "Other" {
+                                    UserDefaults.standard.setValue(listItem.name, forKey: UserDefaultsConstants.questionOneAnswer)
+                                    handleItemSelected()
+                                } else {
+                                    selectedView = "otherView"
+                                }
+                            }
+                            .listRowInsets(EdgeInsets(top: 1, leading: 16, bottom: 16, trailing: 16))
+                            .listRowSeparator(.hidden)
+                        }
+                        
+                        Color.clear
+                            .frame(height: 200)
+                            .listRowInsets(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0))
                     }
-                    .listRowInsets(EdgeInsets(top: 1, leading: 16, bottom: 16, trailing: 16))
-                    .listRowSeparator(.hidden)
+                    .listStyle(PlainListStyle())
+                    .mask(
+                        LinearGradient(gradient: Gradient(colors: [Color.white, Color.white, Color.clear]), startPoint: .top, endPoint: .bottom)
+                    )
                 }
-                .listStyle(PlainListStyle())
-                .mask(
-                    LinearGradient(gradient: Gradient(colors: [Color.white, Color.white, Color.clear]), startPoint: .top, endPoint: .bottom)
-                )
+                .padding(.horizontal, 16)
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+            } else if selectedView == "otherView" {
+                withAnimation {
+                    OtherView(
+                        selectedView: $selectedView,
+                        customAnswerText: $customAnswerText,
+                        questionTitle: $questionTitle,
+                        questionNumber: $questionNumber,
+                        onSubmit:{ handleItemSelected()
+                        })
+                }.transition(.asymmetric(insertion: .move(edge: .bottom), removal: .move(edge: .bottom)))
             }
-            .padding(.horizontal, 16)
-            .frame(maxWidth: .infinity, maxHeight: .infinity)
             
             VStack {
                 Spacer()
-                Button(action: {
-                    handleDismissButton()
-                }) {
-                    Image(systemName: "xmark.circle")
-                        .resizable()
-                        .aspectRatio(contentMode: .fit)
-                        .foregroundColor(.black)
-                        .frame(width: 54, height: 54)
+                HStack {
+                    if selectedView == "otherView" {
+                        Button(action: {
+                            selectedView = "questionOne"
+                        }) {
+                            Image(systemName: "arrowshape.backward.circle")
+                                .resizable()
+                                .aspectRatio(contentMode: .fit)
+                                .foregroundColor(.black)
+                                .frame(width: 54, height: 54)
+                        }
+                        .padding(.bottom, 16)
+                        .padding(.trailing, 16)
+                    }
+                    
+                    Button(action: {
+                        handleDismissButton()
+                    }) {
+                        Image(systemName: "xmark.circle")
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                            .foregroundColor(.black)
+                            .frame(width: 54, height: 54)
+                    }
+                    .padding(.bottom, 16)
+                    .padding(.leading, 16)
                 }
-                .padding(.bottom, 16)
             }
         }
+        .animation(.easeIn(duration: 0.25), value: selectedView)
     }
     
     private func handleItemSelected(){
@@ -76,6 +122,11 @@ struct MeditationQuestionOne: View {
         
     }
 }
+
+
+
+
+
 
 #Preview {
     MeditationQuestionOne { Bool in

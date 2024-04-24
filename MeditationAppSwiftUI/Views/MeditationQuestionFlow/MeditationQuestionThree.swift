@@ -11,7 +11,10 @@ struct MeditationQuestionThree: View {
     
     
     var onDismiss: (Bool) -> Void
-    @State private var showingNextModal = false
+    @State private var selectedView = "questionThree"
+    @State private var customAnswerText = ""
+    @State private var questionTitle = "What bests describes your current environment or physical state?"
+    @State private var questionNumber = 3
     
     let listItems = [
         BasicListWithName(name: "Sitting comfortably"),
@@ -20,49 +23,85 @@ struct MeditationQuestionThree: View {
         BasicListWithName(name: "Other")
     ]
     
-    @State private var title = "What bests describes your current environment or physical state?"
-    
+     
     var body: some View {
         ZStack {
-            VStack {
-                Text(title)
-                    .font(.system(size: 24))
-                    .fontWeight(.semibold)
-                    .frame(maxWidth: .infinity, alignment: .leading)
-                    .padding(.top, 24)
-                    .padding(.horizontal, 16)
-                
-                List(listItems) { listItem in
-                    CardView(listItem: listItem) { selectedListItem in
-                        print(listItem.name)
-                        UserDefaults.standard.setValue(UserDefaultsConstants.experienceLevel, forKey: listItem.name)
-                        handleItemSelected()
+            if selectedView == "questionThree"{
+                VStack {
+                    Text(questionTitle)
+                        .font(.system(size: 24))
+                        .fontWeight(.semibold)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                        .padding(.top, 24)
+                        .padding(.horizontal, 16)
+                    
+                    List(listItems) { listItem in
+                        CardView(listItem: listItem) { selectedListItem in
+                            print(listItem.name)
+                            UserDefaults.standard.setValue(questionTitle, forKey: UserDefaultsConstants.questionThreeQuestion)
+                            if listItem.name == "Other" {
+                                selectedView = "otherView"
+                            } else {
+                                UserDefaults.standard.setValue(listItem.name, forKey: UserDefaultsConstants.questionThreeAnswer)
+                                handleItemSelected()
+                            }
+                           
+                        }
+                        .listRowInsets(EdgeInsets(top: 1, leading: 16, bottom: 16, trailing: 16))
+                        .listRowSeparator(.hidden)
                     }
-                    .listRowInsets(EdgeInsets(top: 1, leading: 16, bottom: 16, trailing: 16))
-                    .listRowSeparator(.hidden)
+                    .listStyle(PlainListStyle())
+                    .mask(
+                        LinearGradient(gradient: Gradient(colors: [Color.white, Color.white, Color.clear]), startPoint: .top, endPoint: .bottom)
+                    )
                 }
-                .listStyle(PlainListStyle())
-                .mask(
-                    LinearGradient(gradient: Gradient(colors: [Color.white, Color.white, Color.clear]), startPoint: .top, endPoint: .bottom)
-                )
+                .padding(.horizontal, 16)
+                .frame(maxWidth: .infinity, maxHeight: .infinity)
+            } else if selectedView == "otherView"{
+                withAnimation {
+                    OtherView(
+                        selectedView: $selectedView,
+                        customAnswerText: $customAnswerText,
+                        questionTitle: $questionTitle,
+                        questionNumber: $questionNumber,
+                        onSubmit:{ handleItemSelected()
+                        })
+                }.transition(.asymmetric(insertion: .move(edge: .bottom), removal: .move(edge: .bottom)))
+
             }
-            .padding(.horizontal, 16)
-            .frame(maxWidth: .infinity, maxHeight: .infinity)
             
             VStack {
                 Spacer()
-                Button(action: {
-                    handleDismissButton()
-                }) {
-                    Image(systemName: "xmark.circle")
-                        .resizable()
-                        .aspectRatio(contentMode: .fit)
-                        .foregroundColor(.black)
-                        .frame(width: 54, height: 54)
+                HStack {
+                    if selectedView == "otherView" {
+                        Button(action: {
+                            selectedView = "questionThree"
+                        }) {
+                            Image(systemName: "arrowshape.backward.circle")
+                                .resizable()
+                                .aspectRatio(contentMode: .fit)
+                                .foregroundColor(.black)
+                                .frame(width: 54, height: 54)
+                        }
+                        .padding(.bottom, 16)
+                        .padding(.trailing, 16)
+                    }
+                    
+                    Button(action: {
+                        handleDismissButton()
+                    }) {
+                        Image(systemName: "xmark.circle")
+                            .resizable()
+                            .aspectRatio(contentMode: .fit)
+                            .foregroundColor(.black)
+                            .frame(width: 54, height: 54)
+                    }
+                    .padding(.bottom, 16)
+                    .padding(.leading, 16)
                 }
-                .padding(.bottom, 16)
             }
         }
+        .animation(.easeIn(duration: 0.25), value: selectedView)
     }
     
     private func handleItemSelected(){

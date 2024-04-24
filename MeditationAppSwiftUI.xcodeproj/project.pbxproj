@@ -26,6 +26,10 @@
 		C13F452A2BD81E2B00E37CB6 /* MeditationQuestionOne.swift in Sources */ = {isa = PBXBuildFile; fileRef = C13F45292BD81E2B00E37CB6 /* MeditationQuestionOne.swift */; };
 		C13F452C2BD8543400E37CB6 /* MeditationQuestionTwo.swift in Sources */ = {isa = PBXBuildFile; fileRef = C13F452B2BD8543400E37CB6 /* MeditationQuestionTwo.swift */; };
 		C13F45302BD86C9200E37CB6 /* MeditationQuestionThree.swift in Sources */ = {isa = PBXBuildFile; fileRef = C13F452F2BD86C9200E37CB6 /* MeditationQuestionThree.swift */; };
+		C13F45382BD937D700E37CB6 /* OtherView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C13F45372BD937D700E37CB6 /* OtherView.swift */; };
+		C13F453C2BD942D200E37CB6 /* CustomColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = C13F453B2BD942D200E37CB6 /* CustomColors.swift */; };
+		C13F453E2BD94EA200E37CB6 /* FindingBestMeditation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C13F453D2BD94EA200E37CB6 /* FindingBestMeditation.swift */; };
+		C13F45402BD9530C00E37CB6 /* BeginMeditationCreation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C13F453F2BD9530C00E37CB6 /* BeginMeditationCreation.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -68,6 +72,10 @@
 		C13F45292BD81E2B00E37CB6 /* MeditationQuestionOne.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeditationQuestionOne.swift; sourceTree = "<group>"; };
 		C13F452B2BD8543400E37CB6 /* MeditationQuestionTwo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeditationQuestionTwo.swift; sourceTree = "<group>"; };
 		C13F452F2BD86C9200E37CB6 /* MeditationQuestionThree.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MeditationQuestionThree.swift; sourceTree = "<group>"; };
+		C13F45372BD937D700E37CB6 /* OtherView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OtherView.swift; sourceTree = "<group>"; };
+		C13F453B2BD942D200E37CB6 /* CustomColors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomColors.swift; sourceTree = "<group>"; };
+		C13F453D2BD94EA200E37CB6 /* FindingBestMeditation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FindingBestMeditation.swift; sourceTree = "<group>"; };
+		C13F453F2BD9530C00E37CB6 /* BeginMeditationCreation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BeginMeditationCreation.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -125,6 +133,7 @@
 				C13F44ED2BD600CC00E37CB6 /* Assets.xcassets */,
 				C13F44EF2BD600CC00E37CB6 /* Preview Content */,
 				C13F45182BD6F3B700E37CB6 /* UserDefaultsConstants.swift */,
+				C13F453B2BD942D200E37CB6 /* CustomColors.swift */,
 			);
 			path = MeditationAppSwiftUI;
 			sourceTree = "<group>";
@@ -191,6 +200,9 @@
 				C13F45292BD81E2B00E37CB6 /* MeditationQuestionOne.swift */,
 				C13F452B2BD8543400E37CB6 /* MeditationQuestionTwo.swift */,
 				C13F452F2BD86C9200E37CB6 /* MeditationQuestionThree.swift */,
+				C13F45372BD937D700E37CB6 /* OtherView.swift */,
+				C13F453D2BD94EA200E37CB6 /* FindingBestMeditation.swift */,
+				C13F453F2BD9530C00E37CB6 /* BeginMeditationCreation.swift */,
 			);
 			path = MeditationQuestionFlow;
 			sourceTree = "<group>";
@@ -341,6 +353,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C13F453E2BD94EA200E37CB6 /* FindingBestMeditation.swift in Sources */,
 				C13F45192BD6F3B700E37CB6 /* UserDefaultsConstants.swift in Sources */,
 				C13F45272BD8171600E37CB6 /* SalesPageView.swift in Sources */,
 				C13F452A2BD81E2B00E37CB6 /* MeditationQuestionOne.swift in Sources */,
@@ -351,10 +364,13 @@
 				C13F45202BD703CA00E37CB6 /* OnboardingStepTwoView.swift in Sources */,
 				C13F452C2BD8543400E37CB6 /* MeditationQuestionTwo.swift in Sources */,
 				C13F45172BD6ED2D00E37CB6 /* OnboardingView.swift in Sources */,
+				C13F453C2BD942D200E37CB6 /* CustomColors.swift in Sources */,
 				C13F451C2BD6F62C00E37CB6 /* OnboardingStepOneView.swift in Sources */,
 				C13F45152BD6020900E37CB6 /* LaunchView.swift in Sources */,
+				C13F45402BD9530C00E37CB6 /* BeginMeditationCreation.swift in Sources */,
 				C13F451E2BD7039400E37CB6 /* LinePageControl.swift in Sources */,
 				C13F44EA2BD600CB00E37CB6 /* MeditationAppSwiftUIApp.swift in Sources */,
+				C13F45382BD937D700E37CB6 /* OtherView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

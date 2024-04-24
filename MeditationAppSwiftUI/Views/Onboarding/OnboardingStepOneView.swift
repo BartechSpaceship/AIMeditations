@@ -25,13 +25,6 @@ struct OnboardingStepOneView: View {
             .background(Color.gray)
             .tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))
             .frame(height: 470) // Adjust height as needed
-            //to set views based on screen size
-//            GeometryReader { geometry in
-//                TabView(selection: $selectedPage) {
-//                    // Your content here
-//                }
-//                .frame(height: geometry.size.height * 0.5) // Takes 50% of the available height
-//            }
             
             Spacer()
             PageControl(numberOfPages: 2, currentPage: $selectedPage)
