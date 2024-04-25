@@ -17,8 +17,12 @@ struct BeginMeditationCreation: View {
     @AppStorage(UserDefaultsConstants.questionThreeAnswer) private var q3A = ""
     
     @State private var selectedMeditationType: String = "Mindfulness Meditation"
-    let meditationTypes = ["Mindfulness Meditation", "Guided Meditation", "Focused Meditation"]
     
+    let meditationTypes = [
+        "Mindfulness Meditation",
+        "Guided Meditation",
+        "Focused Meditation"
+    ]
     
     var body: some View {
         VStack {

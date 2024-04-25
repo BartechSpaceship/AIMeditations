@@ -12,23 +12,22 @@ struct OnboardingStepOneView: View {
     
     var onNext: () -> Void
     
+    @State private var descriptionOne = "Reconnect with yourself through meditation sessions that cater to your life's rhythms"
+    
     var body: some View {
         VStack {
             Spacer()
             //here we create a TabView with two pages each represeting a OnboardingPageView
             TabView(selection: $selectedPage) {
-                OnboardingPageViewOne(title: "AI generated\n5 - Min meditations", description: "Lorem ipsum dolor sit amet, consecteur adipiscing elit.", imageName: "your-image-1")
+                OnboardingPageViewOne(title: "Mindful Moments\nguided by AI", description: descriptionOne, imageName: "your-image-1")
                     .tag(0)
-                OnboardingPageViewOne(title: "Core benefits and value for user", description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit.", imageName: "your-image-2")
+                OnboardingPageViewOne(title: "Lorem ipsum sit dolor achmet tu sant", description: "Meditations for every moment", imageName: "your-image-2")
                     .tag(1)
             }
-            .background(Color.gray)
             .tabViewStyle(PageTabViewStyle(indexDisplayMode: .never))
-            .frame(height: 470) // Adjust height as needed
+             
             
-            Spacer()
-            PageControl(numberOfPages: 2, currentPage: $selectedPage)
-                .background(Color.gray)
+             
             Spacer()
             Button(action: {
                 if selectedPage < 1 {
@@ -41,12 +40,13 @@ struct OnboardingStepOneView: View {
                     // Here you handle the action for when the user is on the last page
                     // For example, advance to the next step of onboarding
                 }
+                
             }) {
-                Text(selectedPage < 1 ? "Next" : "Get Started")
-                    .frame(minWidth: 0, maxWidth: .infinity)
-                    .padding()
-                    .background(Color.gray.opacity(0.2)) // Use your app's color scheme
-                    .cornerRadius(10)
+                Image(systemName: "arrowshape.forward.circle.fill")
+                    .resizable()
+                    .aspectRatio(contentMode: .fit)
+                    .foregroundColor(.gray)
+                    .frame(width: 54, height: 54)
             }
          
             .padding(.all)
@@ -62,6 +62,7 @@ struct OnboardingPageViewOne: View {
     
     var body: some View {
         VStack {
+            Spacer()
             // Align the text to the left using frame alignment
             Text(title)
                 .font(.title)
@@ -72,8 +73,8 @@ struct OnboardingPageViewOne: View {
             
             Text(description)
                 .frame(maxWidth: .infinity, alignment: .leading)  // Aligns the description text to the left
-            
             Spacer()
+        
             
             // Keep the Rectangle centered
             Rectangle()
@@ -84,9 +85,13 @@ struct OnboardingPageViewOne: View {
                         .foregroundColor(.white)
                 )
                 
+            Spacer()
+            Spacer()
+            Spacer()
             // No alignment specified for Rectangle, so it stays centered within its VStack
         }
-        .padding(.horizontal, 32)
+        .padding(.horizontal, 16)
+        
 //        .padding()  // Optionally add padding around the VStack content
     }
 }

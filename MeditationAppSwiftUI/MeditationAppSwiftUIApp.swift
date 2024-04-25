@@ -17,7 +17,7 @@ struct MeditationAppSwiftUIApp: App {
     @AppStorage(UserDefaultsConstants.isOnboardingComplete) private var isOnboardingComplete = false
     
     init() {
-        isOnboardingComplete = true
+        isOnboardingComplete = false
     }
     
     var body: some Scene {

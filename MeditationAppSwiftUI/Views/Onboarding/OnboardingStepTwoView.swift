@@ -15,55 +15,36 @@ struct OnboardingStepTwoView: View {
     @AppStorage(UserDefaultsConstants.userName) private var name: String = ""
     @State private var text = ""
     
-    let guides = [BasicListWithName(name: "Jesus"), BasicListWithName(name: "Allah"), BasicListWithName(name: "Buddha"), BasicListWithName(name: "Ron"), BasicListWithName(name: "Jordan Peterson")]
-    let experience = [BasicListWithName(name: "None"), BasicListWithName(name: "Beginner"), BasicListWithName(name: "Intermediate"), BasicListWithName(name: "Advanced"), BasicListWithName(name: "I am one with meditation")]
+    let guides = [
+        BasicListWithName(name: "Jesus"),
+        BasicListWithName(name: "Allah"),
+        BasicListWithName(name: "Buddha"),
+        BasicListWithName(name: "Ron"),
+        BasicListWithName(name: "Jordan Peterson")
+    ]
+    let experience = [
+        BasicListWithNameAndDescription(name: "No experience", description: "I've never meditated before"),
+        BasicListWithNameAndDescription(name: "Newcomer", description: "Just starting out or curious about meditation"),
+        BasicListWithNameAndDescription(name: "Casual", description: "Occasionally meditate and know the basics"),
+        BasicListWithNameAndDescription(name: "Enthusiast", description: "I meditate regularly and have a consistent practice"),
+        BasicListWithNameAndDescription(name: "Seasoned", description: "I have a deep understanding of meditation")
+    ]
     
     //    var onFinish: () -> Void
     var onNext: () -> Void
+    @State var progressPercentage: Float = 0.33
+    @State var userName = ""
     
     
     var body: some View {
         VStack {
-            
-            HStack {
-                Button(action: {
-                    currentPage -= 1
-                    
-                }) {
-                    Image(systemName: "arrow.left")
-                        .aspectRatio(contentMode: .fit)
-                        .foregroundColor(.black)
-                        .frame(width: 24, height: 24)
-                }
-                .frame(width: 60, alignment: .leading)
-                
-                Spacer()
-                
-                LinePageControl(numberOfPages: 3, currentIndex: currentPage)
-                    .frame(maxHeight: .infinity, alignment: .center)
-                
-                Spacer()
-                
-                // Next button
-                Button(action: {
-                    withAnimation(.easeInOut(duration: 0.5)) {
-                        if currentPage == 2 {
-                            onNext()
-                        } else {
-                            currentPage += 1
-                        }
-                    }
-                }) {
-                    Text("SKIP")
-                        .frame(width: 40)
-                        .foregroundColor(.black)
-                        .fontWeight(.bold)
-                }
-                .frame(width: 60, alignment: .trailing)
-            }
-            .frame(maxHeight: 24)
-            .padding(.horizontal, 32)
-            
+            ProgressView(value: progressPercentage)
+                .progressViewStyle(LinearProgressViewStyle())
+                .tint(.gray)
+                .cornerRadius(0)
+                .frame(maxWidth: .infinity ,maxHeight: 24, alignment: .center)
+                .padding(.horizontal, -3)
+                .edgesIgnoringSafeArea(.horizontal)
             
             // Conditional views based on current page
             ZStack {
@@ -81,6 +62,61 @@ struct OnboardingStepTwoView: View {
                 }
             }
             .animation(.easeOut, value: currentPage)
+            
+            HStack {
+                Button(action: {
+                    withAnimation(.easeInOut(duration: 0.5)) {
+                        if currentPage == 2 {
+                            onNext()
+                        } else {
+                            currentPage += 1
+                        }
+                        setProgressPercentage()
+                    }
+                }) {
+                    Text("Skip")
+                        .frame(width: 40)
+                        .foregroundColor(.black)
+                        .fontWeight(.bold)
+                }
+                .frame(width: 60, alignment: .leading)
+                
+                Spacer()
+                
+                Button(action: {
+                    //Todo implement logic if next button is clicked check if item is selected
+                    if currentPage == 2 {
+                        onNext()
+                    } else {
+                        currentPage += 1
+                    }
+                    
+                    setProgressPercentage()
+                }) {
+                    Image(systemName: "arrowshape.forward.circle.fill")
+                        .resizable()
+                        .aspectRatio(contentMode: .fill)
+                        .foregroundColor(.gray)
+                        .frame(width: 54, height: 54)
+                }
+                .frame(width: 60, alignment: .trailing)
+                 
+            }
+            .padding(.horizontal, 32)
+            .padding(.bottom, 32)
+           
+            
+            
+        }
+    }
+    
+    private func setProgressPercentage(){
+        if currentPage == 0 {
+            progressPercentage = 0.33
+        } else if currentPage == 1 {
+            progressPercentage = 0.66
+        } else if currentPage == 2 {
+            progressPercentage = 0.99
         }
     }
     
@@ -91,7 +127,7 @@ struct OnboardingStepTwoView: View {
         VStack {
             Text("Welcome, I'm (name)")
                 .background(Color.white)
-                .font(.system(size: 32))
+                .font(.title)
                 .fontWeight(.heavy)
                 .frame(maxWidth: .infinity, alignment: .topLeading)
                 .padding(.top, 24)
@@ -100,8 +136,8 @@ struct OnboardingStepTwoView: View {
             
             Text("What would you like to be called?")
                 .background(Color.white)
-                .font(.system(size: 20))
-                .fontWeight(.bold)
+                .font(.subheadline)
+                .fontWeight(.regular)
                 .frame(maxWidth: .infinity, alignment: .topLeading)
             
             
@@ -118,9 +154,10 @@ struct OnboardingStepTwoView: View {
                 }
             
             
+            
             Spacer()
         }
-        .padding(.horizontal, 32)
+        .padding(.horizontal, 16)
         .frame(maxWidth: .infinity, maxHeight: .infinity)
     }
     
@@ -131,17 +168,15 @@ struct OnboardingStepTwoView: View {
         
         VStack {
             Text("Who would you like as your guide?")
-                .font(.system(size: 32))
+                .font(.title)
                 .fontWeight(.heavy)
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .padding(.top, 24)
-                .padding(.horizontal, 16)
-            
+                 
             Text("You can change later")
-                .font(.system(size: 20))
-                .fontWeight(.bold)
+                .font(.subheadline)
+                .fontWeight(.regular)
                 .frame(maxWidth: .infinity, alignment: .leading)
-                .padding(.horizontal, 16)
             
             
             List(guides) { guide in
@@ -150,7 +185,7 @@ struct OnboardingStepTwoView: View {
                     print("Guide Name \(UserDefaults.standard.string(forKey: UserDefaultsConstants.guideName) ?? "")")
                     currentPage += 1
                 }
-                .listRowInsets(EdgeInsets(top: 1, leading: 16, bottom: 16, trailing: 16))
+                .listRowInsets(EdgeInsets(top: 1, leading: 0, bottom: 16, trailing: 0))
                 .listRowSeparator(.hidden)
             }
             .listStyle(PlainListStyle())
@@ -170,23 +205,25 @@ struct OnboardingStepTwoView: View {
         
         VStack {
             Text("How much experience do you have with meditation")
-                .font(.system(size: 32))
+                .font(.title)
                 .fontWeight(.heavy)
                 .frame(maxWidth: .infinity, alignment: .leading)
                 .padding(.top, 24)
-                .padding(.horizontal, 16)
-            
-            
+               
+               
+             
             List(experience) { guide in
-                CardView(listItem: guide) { selectedGuideName in
+                CardViewWithTitleAndDescription(listItem: guide) { selectedGuideName in
                     UserDefaults.standard.set(selectedGuideName, forKey: UserDefaultsConstants.experienceLevel)
                     print("Guide Name \(UserDefaults.standard.string(forKey: UserDefaultsConstants.experienceLevel) ?? "")")
                     onNext()
                 }
-                .listRowInsets(EdgeInsets(top: 1, leading: 16, bottom: 16, trailing: 16))
+                .listRowInsets(EdgeInsets(top: 1, leading: 0, bottom: 16, trailing: 0))
                 .listRowSeparator(.hidden)
             }
+         
             .listStyle(PlainListStyle())
+       
             
             Spacer()
         }
@@ -201,7 +238,8 @@ struct OnboardingStepTwoView: View {
 
 
 #Preview {
-    OnboardingStepTwoView {
-        print("next")
-    }
+    OnboardingStepTwoView(onNext: {print("nothing")}, progressPercentage: 0.33)
+    //    OnboardingStepTwoView {
+    //        print("next")
+    //    }
 }

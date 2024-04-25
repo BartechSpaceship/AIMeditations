@@ -11,13 +11,20 @@ struct LaunchView: View {
     
     
     var body: some View {
-        ZStack {
-            Circle()
-                .frame(width: 200, height: 200)
-                .foregroundColor(.gray)
-            Text("Logo")
+        VStack {
+            ZStack {
+                Circle()
+                    .frame(width: 200, height: 200)
+                    .foregroundColor(.gray)
+                Text("Logo")
+            }
+            .edgesIgnoringSafeArea(.all)
+            
+            Text("Meditations for every moment...")
+                .font(.subheadline)
+                .italic()
+                .padding()
         }
-        .edgesIgnoringSafeArea(.all)
     }
 }
 

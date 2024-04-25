@@ -23,9 +23,9 @@ struct CardView: View {
                     .padding()
                     .frame(maxWidth: .infinity, alignment: .leading)
             }
-            .background(Color.white)
+            .background(Color.D9D9D9_40Opacity)
             .cornerRadius(10)
-            .shadow(color: Color.black.opacity(0.2), radius: 4, x: 0, y: 2)
+//            .shadow(color: Color.black.opacity(0.2), radius: 4, x: 0, y: 2)
             .contentShape(Rectangle()) // Add this modifier
         }
         .buttonStyle(PlainButtonStyle()) // Add this modifier

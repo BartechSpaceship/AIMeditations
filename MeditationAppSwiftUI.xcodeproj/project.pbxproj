@@ -30,6 +30,7 @@
 		C13F453C2BD942D200E37CB6 /* CustomColors.swift in Sources */ = {isa = PBXBuildFile; fileRef = C13F453B2BD942D200E37CB6 /* CustomColors.swift */; };
 		C13F453E2BD94EA200E37CB6 /* FindingBestMeditation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C13F453D2BD94EA200E37CB6 /* FindingBestMeditation.swift */; };
 		C13F45402BD9530C00E37CB6 /* BeginMeditationCreation.swift in Sources */ = {isa = PBXBuildFile; fileRef = C13F453F2BD9530C00E37CB6 /* BeginMeditationCreation.swift */; };
+		C13F45422BDABFEC00E37CB6 /* CardViewWithTitleAndDescription.swift in Sources */ = {isa = PBXBuildFile; fileRef = C13F45412BDABFEC00E37CB6 /* CardViewWithTitleAndDescription.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -76,6 +77,7 @@
 		C13F453B2BD942D200E37CB6 /* CustomColors.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomColors.swift; sourceTree = "<group>"; };
 		C13F453D2BD94EA200E37CB6 /* FindingBestMeditation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FindingBestMeditation.swift; sourceTree = "<group>"; };
 		C13F453F2BD9530C00E37CB6 /* BeginMeditationCreation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BeginMeditationCreation.swift; sourceTree = "<group>"; };
+		C13F45412BDABFEC00E37CB6 /* CardViewWithTitleAndDescription.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardViewWithTitleAndDescription.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -212,6 +214,7 @@
 			children = (
 				C13F451D2BD7039400E37CB6 /* LinePageControl.swift */,
 				C13F45212BD8080300E37CB6 /* CardView.swift */,
+				C13F45412BDABFEC00E37CB6 /* CardViewWithTitleAndDescription.swift */,
 			);
 			path = Reusables;
 			sourceTree = "<group>";
@@ -354,6 +357,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				C13F453E2BD94EA200E37CB6 /* FindingBestMeditation.swift in Sources */,
+				C13F45422BDABFEC00E37CB6 /* CardViewWithTitleAndDescription.swift in Sources */,
 				C13F45192BD6F3B700E37CB6 /* UserDefaultsConstants.swift in Sources */,
 				C13F45272BD8171600E37CB6 /* SalesPageView.swift in Sources */,
 				C13F452A2BD81E2B00E37CB6 /* MeditationQuestionOne.swift in Sources */,
